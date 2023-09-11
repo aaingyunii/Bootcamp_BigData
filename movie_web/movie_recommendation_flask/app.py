@@ -14,11 +14,11 @@ from sklearn.preprocessing import StandardScaler
 
 db = pymysql.connect(
     # host = "aws db 엔드포인트",
-    host="database-1.csv7mtiwmjcc.ap-northeast-2.rds.amazonaws.com",
+    host="",
     port=3306,
     user='admin',
     # passwd='관리자 계정 비밀번호',
-    passwd="rbsldks43198!",
+    passwd="",
     db='movie_db',
     charset='utf8'
 )
