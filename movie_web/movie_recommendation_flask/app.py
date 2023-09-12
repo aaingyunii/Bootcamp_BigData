@@ -2,10 +2,9 @@
 ## 웹으로 전달하려고 한다.
 ### Rest Server
 
-from flask import Flask, request
+from flask import Flask, request, render_template
 import json
 import pymysql
-
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
@@ -55,7 +54,28 @@ sim_df = pd.DataFrame(data=sim_score)
 sim_df.index = movie_df["title"]
 sim_df.columns = movie_df["title"]
 
+### 웹서버가 열리기 이전에 추천 모델에 필요한 작업들을 미리 해놔
+### 웹에서 실행되는 속도를 올릴 수 있음.
+### 위 과정은 MySQL DB 데이터를 가져와 파이썬 내부에서 DataFrame을 통해
+### 데이터를 조작하고, scaling, euclidean_distance 계산을 미리 해놓은 상태.
+
+
+
+################# 웹 서버 동작관련 ########################
 app = Flask(__name__)
+
+@app.route("/", methods=["GET"])
+def main():
+    return render_template("index.html")
+
+# POST 방식으로 main() 에서 작성된 값을 받아
+## 해당 URL 에서 동작
+@app.route("/ffirst", methods=["POST"])
+def ffirst():
+    user_id = request.form["id"]
+    user_pw = request.form["pw"]
+
+    return "아이디 : "+user_id+"\n비밀번호 : "+user_pw
 
 
 # POST 방식으로 movie_recommend URL 일 때, 실행
@@ -63,13 +83,10 @@ app = Flask(__name__)
 def hello_world():
     # 입력한 제목 값 리턴
     req_title = request.form["title"]
-    
     # 입력한 영화 제목과 가장 가까운 영화 3편을 result에 할당
     result = sim_df[req_title].sort_values()[1:4]
-    
     # 영화 제목이 저장된 result.index 를 리스트로 변환
-    result = result.index.tolist()
-    
+    result = result.reset_index().values.tolist()
     # Json 문자열로 변환
     result = json.dumps(result, ensure_ascii=False)
     
@@ -77,3 +94,5 @@ def hello_world():
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0") # Flask 시작, host = "0.0.0.0" 다른 컴퓨터에서 접속 가능
+                            ## 따로 port= 설정하지 않았으므로 5000을 사용
+                            ### 만약 다른 포트를 사용하면, port= 설정.
