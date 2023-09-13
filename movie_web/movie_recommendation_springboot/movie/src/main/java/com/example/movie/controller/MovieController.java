@@ -33,11 +33,11 @@ public class MovieController {
 
     @RequestMapping(value = "/box_office")
     @ResponseBody // Json 문자열 리턴
-    // 박스 오피스 가장 최근 영화 5개와 각 영화와 가장 가까운 영화 3개 추천
+    // 박스 오피스 가장 흥행한 영화 5개와 각 영화와 가장 가까운 영화 3개 추천
     public String boxOffice() throws Exception{
         List<Movie> boxOfficeList = movieRepository.findBoxOffice();
 
-        // 박스 오피스 최신 영화와 추천 영화가 모두 저장될 객체
+        // 박스 오피스 흥행 영화와 추천 영화가 모두 저장될 객체
         List<Map> allMovie = new ArrayList<Map>();
 
         for(int i=0;i<boxOfficeList.size();i++){
@@ -103,4 +103,6 @@ public class MovieController {
         return new JSONArray(allMovie).toString();
         
     }
+
+
 }
