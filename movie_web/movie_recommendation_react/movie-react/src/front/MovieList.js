@@ -75,6 +75,11 @@ const MovieList = () =>{ //MovieList 객체 생성
                     */}
                     {loading && <h1>현재 백엔드에서 데이터를 가져 오는 중 입니다</h1> }
 
+                    {/* 버튼 추가 */}
+                    <button onClick={() => window.location.href = 'http://localhost:8080/box_office'}>
+                        localhost:8080/box_office로 이동
+                    </button>
+                    
                     {/* allMovie변수의 값 출력 */}
 
                     {/* allMovie.map((data,index) : allMovie의 데이터를 1개씩 순서대로 data에 대입해서 반복문 실행*/}
