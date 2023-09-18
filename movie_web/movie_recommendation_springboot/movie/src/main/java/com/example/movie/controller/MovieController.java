@@ -14,6 +14,7 @@ import org.apache.hc.client5.http.impl.classic.HttpClients;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.message.BasicNameValuePair;
 import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.example.movie.data.entity.Movie;
 import com.example.movie.data.repository.MovieRepository;
+import com.mysql.cj.xdevapi.JsonArray;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,7 +55,7 @@ public class MovieController {
             log.info("영화 제목 : "+movieTitle);
 
             // 호출할 Flask의 url 설정
-            HttpPost httpPost = new HttpPost("http://:5000/movie_recommend");
+            HttpPost httpPost = new HttpPost("호출할 Flask의 url/movie_recommend");
 
             // Flask로 전송할 영화 제목을 저장할 객체
             List<BasicNameValuePair> nvps = new ArrayList<>();
@@ -100,9 +102,16 @@ public class MovieController {
                 log.info("에러 : "+e);
             }
         }
-        return new JSONArray(allMovie).toString();
+        JSONArray movieMovie = new JSONArray(allMovie);
+        // log.info("무비무비 : "+movieMovie.getJSONObject(1));
+        for(int i=0;i<movieMovie.length();i++){
+            JSONObject tmp = movieMovie.getJSONObject(i);
+            // log.info("템프템프 : "+tmp);
+            log.info("템프 무비 : "+tmp.getJSONObject("movie"));
+            JSONObject temp = tmp.getJSONObject("movie");
+            
+        }
+        return movieMovie.toString();
         
     }
-
-
 }
