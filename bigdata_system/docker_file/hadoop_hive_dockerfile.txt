@@ -1,5 +1,7 @@
 FROM ubuntu:22.04
-RUN apt update
+RUN ln -snf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
+RUN apt update --fix-missing 
+RUN apt upgrade -y
 RUN apt install -y openssh-server
 RUN apt install -y openssh-client
 RUN apt install -y pdsh
@@ -74,11 +76,9 @@ RUN printf  "<property>\n\
 
 RUN apt install less
 
-#============================= 하이브 설치 =======================================
+#============================= 하이브 설치 =====================================
 RUN /bin/bash -c  "apt-get install python3-pip -y"
 
-#RUN apt-get install mysql-server -y
-## mysql 버전이 안맞아 학습을 위해 조금 아래버전의 mysql을 리눅스에서 직접 설치
 
 #하이브 다운로드 폴더 생성
 RUN mkdir ~/hive
@@ -137,13 +137,13 @@ RUN wget https://repo1.maven.org/maven2/mysql/mysql-connector-java/8.0.22/mysql-
 RUN rm -rf /root/hive/lib/guava-19.0.jar
 RUN cp /root/hadoop/share/hadoop/common/lib/guava-27.0-jre.jar /root/hive/lib/
 
-# 한글 다운로드
+#한글 다운로드
 RUN apt-get install locales
-# 한글 출력 설정
+#한글 출력 설정
 RUN localedef -f UTF-8 -i ko_KR ko_KR.UTF-8
-# 하이브 한글 출력 설정
+#하이브 한글 출력 설정
 RUN export LC_ALL=ko_KR.UTF-8
-# 한글 입력 설정
+#한글 입력 설정
 RUN LC_ALL=ko_KR.UTF-8 bash
 
 
@@ -154,3 +154,46 @@ RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=down
 RUN apt-get install unzip
 RUN /bin/bash -c "unzip /data/data.zip -d /data"
 
+RUN apt-get install expect -qy
+
+RUN wget https://dev.mysql.com/get/mysql-apt-config_0.8.12-1_all.deb  -P /root/
+
+
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1lMwdz0obX6d-QVwnp7mn64H2Hd9k7GGk' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1lMwdz0obX6d-QVwnp7mn64H2Hd9k7GGk" -O /root/mysql_5_7_select.sh && rm -rf /tmp/cookies.txt
+
+RUN  sed -i 's/\r$//' /root/mysql_5_7_select.sh 
+
+
+RUN chmod 777 /root/mysql_5_7_select.sh
+
+RUN  /bin/bash -c "/root/mysql_5_7_select.sh"
+
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 467B942D3A79BD29 
+
+RUN apt-cache policy mysql-server
+
+
+RUN apt-get update
+
+RUN echo 15
+
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1_oEwt4y38JTklDi1bQDIXiDoPUp2gOXk' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1_oEwt4y38JTklDi1bQDIXiDoPUp2gOXk" -O /root/mysql_5_7_install.sh && rm -rf /tmp/cookies.txt
+
+
+RUN  sed -i 's/\r$//' /root/mysql_5_7_install.sh 
+RUN chmod 777 /root/mysql_5_7_install.sh
+RUN dpkg --configure -a
+
+RUN  /bin/bash -c "/root/mysql_5_7_install.sh"
+
+RUN sleep 1
+
+#https://drive.google.com/file/d/15LGcZTJjFWnQstZPeXuVAg73pjwMkYEl/view?usp=drive_link
+
+RUN wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=15LGcZTJjFWnQstZPeXuVAg73pjwMkYEl' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=15LGcZTJjFWnQstZPeXuVAg73pjwMkYEl" -O /root/hadoop_hive_start.sh && rm -rf /tmp/cookies.txt
+
+
+RUN  sed -i 's/\r$//' /root/hadoop_hive_start.sh 
+RUN chmod 777 /root/hadoop_hive_start.sh
+
+WORKDIR /root
