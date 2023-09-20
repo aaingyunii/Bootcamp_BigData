@@ -123,7 +123,7 @@ WHERE hd.dt ='2019-03-04'
 ;
 
 -- 위 쿼리를 서브쿼리로 사용해서 조회
--- 거래소별 하락순위 전체기간
+-- 2019년 3월 4일 거래소별 하락순위
 SELECT a.*
 from(SELECT s.*
 			,hd.chg_rt 
@@ -131,7 +131,7 @@ from(SELECT s.*
 			ORDER by hd.chg_rt ASC)	`거래소별하락순위`
 	FROM stock s 
 	inner join history_dt hd on (hd.stk_cd=s.stk_cd)
-	-- WHERE hd.dt ='2019-03-04'
+	WHERE hd.dt ='2019-03-04'
 )a
 WHERE a.`거래소별하락순위` <=3
 ;
