@@ -1,0 +1,23 @@
+#apache/airflow:2.7.1 다운로드
+FROM apache/airflow:2.7.1
+
+USER root
+
+RUN apt-get update
+
+RUN apt-get install libc-dev    -y
+RUN apt install git -y
+RUN apt-get install build-essential -y
+RUN apt-get install python-dev  -y
+
+# airflow 계정으로 실행
+USER airflow
+
+RUN pip3 install pip --upgrade
+RUN pip3 install PyMySQL
+RUN pip3 install scikit-learn
+RUN pip3 install plotly
+RUN pip3 install pystan==2.19.1.1
+RUN pip3 install prophet
+
+RUN python3 -c "from prophet import Prophet;print(Prophet);"
