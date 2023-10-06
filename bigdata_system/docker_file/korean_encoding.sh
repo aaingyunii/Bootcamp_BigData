@@ -11,7 +11,7 @@ sleep 3
 
 #하이브 한글 출력 설정
 export LC_ALL=ko_KR.UTF-8
-sleep3
+sleep 3
 
 #한글 입력 설정
 LC_ALL=ko_KR.UTF-8 bash
