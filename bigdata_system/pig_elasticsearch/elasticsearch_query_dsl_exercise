@@ -1,0 +1,189 @@
+POST _sql/translate
+{
+  "query":"SELECT * FROM jeju_bus where now_station ='아라주공아파트'"
+}
+
+GET jeju_bus*/_search
+{
+  "query" : {
+    "term" : {
+      "now_station.keyword" : {
+        "value" : "아라주공아파트",
+        "boost" : 1.0
+      }
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "customer_address": "서울특별시"
+          }
+        },
+        {
+          "match": {
+            "customer_gender": "여성"
+          }
+        }
+      ],
+      "must_not": [
+        {
+          "match": {
+            "shopping_mall": "위메프 쿠팡"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "match": {
+            "delivery_memo": "이상 부재중"
+          }
+        }
+      ]
+      , "should": [
+        {
+          "match": {
+            "delivery_memo": "이상"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "query": {
+    "range": {
+      "price": {
+        "gte": 10000,
+        "lt": 20000
+      }
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "query": {
+    "range": {
+      "order_date": {
+        "gte": "2021-12-15",
+        "lt": "2021-12-26"
+      }
+    }
+  }
+}
+
+
+GET shopping*/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {
+          "range": {
+            "order_date": {
+              "gte": "2021-12-15",
+              "lt": "2021-12-26"
+            }
+          }
+        },
+        {
+          "match":{
+            "delivery_memo" : "부재중 이상 환불 관리실에"
+          }
+        }
+      ],
+      "should": [
+        {
+          "match": {
+            "delivery_memo":"관리실에"
+          }
+        }
+      ]
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "size": 0, 
+  "aggs": {
+    "total_price": {
+      "sum": {
+        "field": "price"
+      }
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "size": 0,
+  "query": {
+    "match": {
+      "shopping_mall": "쿠팡"
+    }
+  }
+  ,
+  "aggs": {
+    "coupang_stats": {
+      "stats": {
+        "field": "price"
+      }
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "size": 0
+  ,
+  "aggs": {
+    "uniq_payment": {
+      "cardinality": {
+        "field": "payment.keyword"
+      }
+    }
+  }
+}
+
+GET shopping*/_search
+{
+  "size": 0
+  ,
+  "aggs": {
+    "price_percentile": {
+      "percentiles": {
+        "field": "price"
+      }
+    }
+  }
+}
+
+GET jeju_bus*/_search
+{
+  "size": 0
+  ,
+  "aggs": {
+    "stations": {
+      "cardinality": {
+        "field": "now_station.keyword"
+      }
+    }
+  }
+}
