@@ -1,0 +1,82 @@
+A = LOAD '/root/shopping.csv' USING PigStorage(',')
+AS 
+(order_date:chararray,       
+delivery_date:chararray,     
+reservation :chararray,      
+delivery_memo:chararray,     
+customer_ip:chararray,       
+customer_gender:chararray,   
+customer_age:int,            
+delivery_point_lat:double,
+delivery_point_lon:double,
+customer_address:chararray,  
+shopping_mall:chararray,     
+custom_score:int,                   
+product_classfication:chararray,
+price :int,
+amount:int,                      
+payment:chararray );
+
+B = foreach A generate ToDate(order_date,'yyyy-MM-dd HH:mm:ss') as order_date,        
+ToDate(delivery_date,'yyyy-MM-dd HH:mm:ss') as delivery_date,     
+reservation,      
+delivery_memo,     
+customer_ip,       
+customer_gender,   
+customer_age,            
+delivery_point_lat,
+delivery_point_lon,
+customer_address,  
+shopping_mall,     
+custom_score,                   
+product_classfication, 
+price,
+amount,                      
+payment ; 
+
+
+STORE B INTO 'shopping'
+       USING org.elasticsearch.hadoop.pig.EsStorage(
+       'es.nodes.wan.only=true'
+       ,'es.port=9201',
+       'es.nodes=localhost');
+
+
+bus01 = LOAD '/root/jeju_bus.csv' USING PigStorage(',')
+AS 
+(id:int,       
+date:chararray,     
+route_id:chararray,      
+vh_id:chararray,     
+route_nm:chararray,       
+now_arrive_time:chararray,   
+now_latitude:double,            
+now_longitude:double,
+now_station:chararray,
+distance:int,  
+next_station:chararray,     
+next_latitude:double,                   
+next_longitude:double,
+next_arrive_time:int);
+
+
+bus02 = foreach bus01 generate id,       
+ToDate(date,'yyyy-MM-dd') as date,     
+route_id,      
+vh_id,     
+route_nm,       
+now_arrive_time,   
+now_latitude,            
+now_longitude,
+now_station,
+distance,  
+next_station,     
+next_latitude,                   
+next_longitude,
+next_arrive_time; 
+
+STORE bus02 INTO 'jeju_bus'
+       USING org.elasticsearch.hadoop.pig.EsStorage(
+       'es.nodes.wan.only=true'
+       ,'es.port=9201',
+       'es.nodes=localhost');
