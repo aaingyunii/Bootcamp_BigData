@@ -1,0 +1,27 @@
+PUT location_jeju_bus
+
+PUT location_jeju_bus/_mapping/doc?include_type_name=true
+{
+  "properties":{
+    "next_location" :{
+      "type" : "geo_point"
+    },
+    "now_location":{
+      "type" : "geo_point"
+    }
+  }
+}
+
+POST _reindex
+{
+  "source": {
+    "index": "jeju_bus"
+  },
+  "dest": {
+    "index": "location_jeju_bus"
+  },
+  "script": {
+    "source": 
+    "if (ctx._source.now_latitude != null)ctx._source.now_location= ['lat': ctx._source.now_latitude, 'lon': ctx._source.now_longitude];if (ctx._source.next_latitude != null)ctx._source.next_location= ['lat': ctx._source.next_latitude, 'lon': ctx._source.next_longitude];"
+  }
+}
