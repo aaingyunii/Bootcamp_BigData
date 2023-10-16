@@ -69,7 +69,7 @@ RUN apt install less
 RUN /bin/bash -c  "apt-get install python3-pip -y"
 
 
-#ÇÑ±Û ´Ù¿î·Îµå
+#í•œê¸€ ë‹¤ìš´ë¡œë“œ
 RUN apt-get install locales
 
 RUN apt-get install unzip
@@ -89,7 +89,7 @@ RUN rm -r /root/elasticsearch-hadoop-7.17.13
 
 
 
-#=========== elastic search ¼³Ä¡ ====================================
+#=========== elastic search ì„¤ì¹˜    ====================================
 RUN apt update	--fix-missing 
 RUN apt install curl -y 
 RUN apt-get install net-tools -y 
@@ -125,7 +125,7 @@ server.host: \"0.0.0.0\"\n\
 elasticsearch.hosts: [\"http://localhost:9201\"]" >>/etc/kibana/kibana.yml
 
 
-#======================= spark  ¼³Ä¡ =========================
+#======================= spark  ì„¤ì¹˜ =========================
 RUN mkdir /root/spark
 RUN wget https://archive.apache.org/dist/spark/spark-3.2.1/spark-3.2.1-bin-hadoop3.2.tgz -P /root/spark
 RUN tar -xzvf /root/spark/spark-3.2.1-bin-hadoop3.2.tgz -C /root/spark --strip 1
@@ -162,7 +162,7 @@ RUN sed -i 's/8080/8877/gi' /root/zeppelin/conf/zeppelin-site.xml
 
 RUN cp /root/zeppelin/conf/zeppelin-env.sh.template /root/zeppelin/conf/zeppelin-env.sh
 
-#========= ¼³Á¤ =====================================================
+#========= ì„¤ì • =====================================================
 
 RUN printf "\n\
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64\n\
