@@ -1,0 +1,799 @@
+﻿{
+  "paragraphs": [
+    {
+      "text": "%md\n\n# `Spark model`, 버스 도착 시각 예측 데이터 `MySQL` 에 저장\n\n### 이전 `ai_spark_bus_arrive_prediction` 은 `Kafka topic`, `car_arrive_topic` 에 저장하였는데\n### `car_location_topic` 도 사용 중이다 보니 잘 구동되지 않는 경우(컴퓨터 메모리 부족, CPU 과부하 등의 문제 발생)가 있어\n### 보편적으로 잘 사용되기 위해 `MySQL` 에 데이터를 저장하는 파일도 생성한 것.",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:43+0900",
+      "progress": 0,
+      "config": {
+        "tableHide": false,
+        "editorSetting": {
+          "language": "markdown",
+          "editOnDblClick": true,
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/markdown",
+        "fontSize": 9,
+        "editorHide": true,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "HTML",
+            "data": "<div class=\"markdown-body\">\n<h1><code>Spark model</code>, 버스 도착 시각 예측 데이터 <code>MySQL</code> 에 저장</h1>\n<h3>이전 <code>ai_spark_bus_arrive_prediction</code> 은 <code>Kafka topic</code>, <code>car_arrive_topic</code> 에 저장하였는데</h3>\n<h3><code>car_location_topic</code> 도 사용 중이다 보니 잘 구동되지 않는 경우(컴퓨터 메모리 부족, CPU 과부하 등의 문제 발생)가 있어</h3>\n<h3>보편적으로 잘 사용되기 위해 <code>MySQL</code> 에 데이터를 저장하는 파일도 생성한 것.</h3>\n\n</div>"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513531629_1934720532",
+      "id": "paragraph_1697513531629_1934720532",
+      "dateCreated": "2023-10-17T12:32:11+0900",
+      "dateStarted": "2023-10-17T15:03:43+0900",
+      "dateFinished": "2023-10-17T15:03:44+0900",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:2734"
+    },
+    {
+      "text": "%sh\n# pip uninstall pandas --y",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:44+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513428488_30140179",
+      "id": "paragraph_1697513428488_30140179",
+      "dateCreated": "2023-10-17T12:30:28+0900",
+      "dateStarted": "2023-10-17T15:03:44+0900",
+      "dateFinished": "2023-10-17T15:03:45+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2735"
+    },
+    {
+      "text": "%sh\n# pip install -U pandas==1.5.3",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:45+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513461582_1166500693",
+      "id": "paragraph_1697513461582_1166500693",
+      "dateCreated": "2023-10-17T12:31:01+0900",
+      "dateStarted": "2023-10-17T15:03:45+0900",
+      "dateFinished": "2023-10-17T15:03:45+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2736"
+    },
+    {
+      "text": "%sh\n# pip install ksql",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:45+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513459542_242637286",
+      "id": "paragraph_1697513459542_242637286",
+      "dateCreated": "2023-10-17T12:30:59+0900",
+      "dateStarted": "2023-10-17T15:03:45+0900",
+      "dateFinished": "2023-10-17T15:03:45+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2737"
+    },
+    {
+      "text": "%sh\n# pip install PyMySQL",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:45+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513496391_1082163653",
+      "id": "paragraph_1697513496391_1082163653",
+      "dateCreated": "2023-10-17T12:31:36+0900",
+      "dateStarted": "2023-10-17T15:03:45+0900",
+      "dateFinished": "2023-10-17T15:03:45+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2738"
+    },
+    {
+      "text": "%sh\n# pip install cffi",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:45+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "sh",
+          "editOnDblClick": false,
+          "completionSupport": false
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/sh",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513492214_1756472733",
+      "id": "paragraph_1697513492214_1756472733",
+      "dateCreated": "2023-10-17T12:31:32+0900",
+      "dateStarted": "2023-10-17T15:03:45+0900",
+      "dateFinished": "2023-10-17T15:03:45+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2739"
+    },
+    {
+      "text": "%spark.pyspark\n\nfrom ksql import KSQLAPI\nimport pandas as pd\nimport time\nimport datetime\nimport numpy as np\nfrom pyspark.ml.regression import RandomForestRegressionModel\nfrom pyspark.ml.feature import VectorAssembler\nimport ast\nimport pymysql",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:45+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513427803_380595967",
+      "id": "paragraph_1697513427803_380595967",
+      "dateCreated": "2023-10-17T12:30:27+0900",
+      "dateStarted": "2023-10-17T15:03:45+0900",
+      "dateFinished": "2023-10-17T15:03:46+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2740"
+    },
+    {
+      "text": "%spark.pyspark\n\nclient = KSQLAPI(\"http://localhost:8089\", timeout=None)",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:46+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513426154_1588592240",
+      "id": "paragraph_1697513426154_1588592240",
+      "dateCreated": "2023-10-17T12:30:26+0900",
+      "dateStarted": "2023-10-17T15:03:46+0900",
+      "dateFinished": "2023-10-17T15:03:46+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2741"
+    },
+    {
+      "text": "%spark.pyspark\n# MySQL DB 연결\n\nmysql_db = pymysql.connect(\n        host = \"192.168.0.171\" # MySQL이 설치된 윈도우 IP 주소\n        ,port=3306\n        ,user='root'\n        ,passwd='1234'\n        ,db='bus_db'\n        ,charset='utf8'\n    )",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:46+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697512766717_544836363",
+      "id": "paragraph_1697512766717_544836363",
+      "dateCreated": "2023-10-17T12:19:26+0900",
+      "dateStarted": "2023-10-17T15:03:46+0900",
+      "dateFinished": "2023-10-17T15:03:46+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2742"
+    },
+    {
+      "text": "%spark.pyspark\n\nmysql_cursor = mysql_db.cursor()",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:46+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697512788624_1878750126",
+      "id": "paragraph_1697512788624_1878750126",
+      "dateCreated": "2023-10-17T12:19:48+0900",
+      "dateStarted": "2023-10-17T15:03:46+0900",
+      "dateFinished": "2023-10-17T15:03:46+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2743"
+    },
+    {
+      "text": "%spark.pyspark\n# 하둡에 저장된 모델 읽어서 저장\n\nload_rf = RandomForestRegressionModel.load(\"/spark_rf_model/\")",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:46+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513876982_1335581017",
+      "id": "paragraph_1697513876982_1335581017",
+      "dateCreated": "2023-10-17T12:37:56+0900",
+      "dateStarted": "2023-10-17T15:03:47+0900",
+      "dateFinished": "2023-10-17T15:04:23+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2744"
+    },
+    {
+      "text": "%spark.pyspark\n\nload_rf",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:23+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "RandomForestRegressionModel: uid=RandomForestRegressor_6f7497467931, numTrees=100, numFeatures=7\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513878338_933062877",
+      "id": "paragraph_1697513878338_933062877",
+      "dateCreated": "2023-10-17T12:37:58+0900",
+      "dateStarted": "2023-10-17T15:04:23+0900",
+      "dateFinished": "2023-10-17T15:04:23+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2745"
+    },
+    {
+      "text": "%spark.pyspark\n\nfeature_name_list = [\n                    'now_latitude', 'now_longitude', 'now_arrive_time',\n                    'distance','next_latitude','next_longitude','weekday'\n                    ]",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:23+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513879521_491794720",
+      "id": "paragraph_1697513879521_491794720",
+      "dateCreated": "2023-10-17T12:37:59+0900",
+      "dateStarted": "2023-10-17T15:04:23+0900",
+      "dateFinished": "2023-10-17T15:04:23+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2746"
+    },
+    {
+      "text": "%spark.pyspark\n\nfeature_name_list",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:23+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": [
+          {
+            "type": "TEXT",
+            "data": "['now_latitude', 'now_longitude', 'now_arrive_time', 'distance', 'next_latitude', 'next_longitude', 'weekday']\n"
+          }
+        ]
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513881609_1787919652",
+      "id": "paragraph_1697513881609_1787919652",
+      "dateCreated": "2023-10-17T12:38:01+0900",
+      "dateStarted": "2023-10-17T15:04:23+0900",
+      "dateFinished": "2023-10-17T15:04:23+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2747"
+    },
+    {
+      "text": "%spark.pyspark\n\nget_change_table = client.query(\"\"\"SELECT * FROM bus_location_topic EMIT CHANGES;\"\"\")",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:23+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513882270_1145666768",
+      "id": "paragraph_1697513882270_1145666768",
+      "dateCreated": "2023-10-17T12:38:02+0900",
+      "dateStarted": "2023-10-17T15:04:23+0900",
+      "dateFinished": "2023-10-17T15:04:24+0900",
+      "status": "FINISHED",
+      "$$hashKey": "object:2748"
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:24+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697522475061_901731542",
+      "id": "paragraph_1697522475061_901731542",
+      "dateCreated": "2023-10-17T15:01:15+0900",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4464",
+      "dateFinished": "2023-10-17T15:04:24+0900",
+      "dateStarted": "2023-10-17T15:04:24+0900",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:24+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697522521917_508419973",
+      "id": "paragraph_1697522521917_508419973",
+      "dateCreated": "2023-10-17T15:02:01+0900",
+      "status": "FINISHED",
+      "focus": true,
+      "$$hashKey": "object:4549",
+      "dateFinished": "2023-10-17T15:04:24+0900",
+      "dateStarted": "2023-10-17T15:04:24+0900",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%spark.pyspark\n\nfor i in get_change_table:\n    print(f\"수정된 테이블 조회 : {i}\")\n    \n    if \"row\" in i:\n        location = ast.literal_eval(i)[0][\"row\"][\"columns\"]\n        print(f\"위치 : {location}\")\n        \n        id = location[0]\n        date = location[1]\n        route_id = location[2]\n        vh_id = location[3]\n        route_nm = location[4]\n        now_latitude = location[5]\n        now_longitude = location[6]\n        now_station = location[7]\n        now_arrive_time = location[8]\n        distance = location[9]\n        next_station = location[10]\n        next_latitude = location[11]\n        next_longitude = location[12]\n        weekday = location[13]\n        \n        # 예측을 위해 버스 위치 정보를 Pandas DataFrame 으로 생성\n        df_location = pd.DataFrame({\n            \"now_latitude\" : [now_latitude],\n            \"now_longitude\" : [now_longitude],\n            \"now_arrive_time\" : [now_arrive_time],\n            \"distance\" : [distance],\n            \"next_latitude\" : [next_latitude],\n            \"next_longitude\" : [next_longitude],\n            \"weekday\" : [weekday]\n        })\n        \n        # Pandas DataFrame인 df_location을 Spark DataFrame 으로 변환\n        # Spark RandomForest 모델에서 예측을 위해\n        df_spark = spark.createDataFrame(df_location)\n        \n        assembler = VectorAssembler(inputCols=feature_name_list, outputCol=\"features\")\n        \n        assembler_df = assembler.transform(df_spark)\n        \n        prediction = load_rf.transform(assembler_df)\n        \n        arrive_time = prediction.toPandas().loc[0,\"prediction\"]\n        print(\"#\"*100)\n\n        # 학습시 예측을 로그 값으로 예측하기 때문에 np.exp(로그값) => 원래 값으로 변환 출력\n        print(f\"버스로 전송할 도착 예정 시간 : {np.exp(arrive_time)}\")\n        print(\"#\"*100)\n        \n        # 다음 정류장에 도착 예정 시간을 소수 3번째 자리 반올림\n        next_arrive_time = round(np.exp(arrive_time),3)\n        \n        # route_id : 노선아이디, vh_id : 버스 아이디, route_nm : 버스노선명\n        count_query = f\"\"\"\n                        select count(*) from bus_arrive_prediction\n                        where route_id = '{route_id}'\n                        and vh_id = '{vh_id}'\n                        and route_nm = '{route_nm}'\n                        \"\"\"\n        print(f\"count_query : {count_query}\")\n        mysql_cursor.execute(count_query)\n        \n        count = mysql_cursor.fetchall()[0][0]\n        print(f\"count : {count}\")\n        \n        if count < 1 : #=> 노선아이디, 버스아이디, 버스노선명이 일치하는 것이 없을 때 == 데이터가 없을 때\n            \n            insert_query = f\"\"\"INSERT INTO bus_arrive_prediction (\n                            now_date\n                            ,route_id\n                            ,vh_id\n                            ,route_nm\n                            ,now_latitude\n                            ,now_longitude\n                            ,now_station\n                            ,distance\n                            ,next_station\n                            ,next_latitude\n                            ,next_longitude\n                            ,next_arrive_time\n                            ) VALUES ( now() ,'{route_id}' ,'{vh_id}'\n                                    ,'{route_nm}',{now_latitude}\n                                    ,{now_longitude},'{now_station}'\n                                    ,{distance}\n                                    ,'{next_station}',{next_latitude}\n                                    ,{next_longitude},{next_arrive_time}\n                        );\"\"\"\n            print(f\"insert query :\\n{insert_query}\")\n            mysql_cursor.execute(insert_query)\n            mysql_db.commit()\n        \n        else:\n            \n            update_query = f\"\"\"update bus_arrive_prediction \n                        set now_date=now()\n                        ,now_latitude={now_latitude}\n                        ,now_longitude={now_longitude}\n                        ,now_station = '{now_station}'\n                        ,distance={distance}\n                        ,next_station = '{next_station}'\n                        ,next_latitude={next_latitude}\n                        ,next_longitude={next_longitude}\n                        ,next_arrive_time = {next_arrive_time}\n                        where route_id = '{route_id}'\n                        and vh_id = '{vh_id}'\n                        and route_nm = '{route_nm}'\n                        \"\"\"\n            print(f\"update query :\\n{update_query}\")\n            mysql_cursor.execute(update_query)\n            mysql_db.commit()                \n\n            \n    print(\"=\"*100)",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:04:24+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513974910_1105778531",
+      "id": "paragraph_1697513974910_1105778531",
+      "dateCreated": "2023-10-17T12:39:34+0900",
+      "dateStarted": "2023-10-17T15:04:24+0900",
+      "dateFinished": "2023-10-17T15:03:26+0900",
+      "status": "RUNNING",
+      "$$hashKey": "object:2749",
+      "results": {
+        "msg": [
+          {
+            "data": "",
+            "type": "TEXT"
+          }
+        ]
+      }
+    },
+    {
+      "text": "%spark.pyspark\n\nmysql_db.close()",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T12:56:15+0900",
+      "progress": 0,
+      "config": {
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "colWidth": 12,
+        "editorMode": "ace/mode/python",
+        "fontSize": 9,
+        "results": {},
+        "enabled": true
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513883131_2017600314",
+      "id": "paragraph_1697513883131_2017600314",
+      "dateCreated": "2023-10-17T12:38:03+0900",
+      "status": "PENDING",
+      "$$hashKey": "object:2750"
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:03:05+0900",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "results": {},
+        "enabled": true,
+        "editorSetting": {}
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697513967346_292192848",
+      "id": "paragraph_1697513967346_292192848",
+      "dateCreated": "2023-10-17T12:39:27+0900",
+      "status": "PENDING",
+      "$$hashKey": "object:2751",
+      "dateFinished": "2023-10-17T15:03:05+0900",
+      "dateStarted": "2023-10-17T15:03:05+0900",
+      "results": {
+        "code": "SUCCESS",
+        "msg": []
+      }
+    },
+    {
+      "text": "%spark.pyspark\n",
+      "user": "anonymous",
+      "dateUpdated": "2023-10-17T15:02:39+0900",
+      "progress": 0,
+      "config": {
+        "colWidth": 12,
+        "fontSize": 9,
+        "enabled": true,
+        "results": {},
+        "editorSetting": {
+          "language": "python",
+          "editOnDblClick": false,
+          "completionSupport": true,
+          "completionKey": "TAB"
+        },
+        "editorMode": "ace/mode/python"
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "apps": [],
+      "runtimeInfos": {},
+      "progressUpdateIntervalMs": 500,
+      "jobName": "paragraph_1697522559577_1006458703",
+      "id": "paragraph_1697522559577_1006458703",
+      "dateCreated": "2023-10-17T15:02:39+0900",
+      "status": "PENDING",
+      "focus": true,
+      "$$hashKey": "object:4636"
+    }
+  ],
+  "name": "ai_spark_mysql_bus_arrive_prediction",
+  "id": "2JESR1QKA",
+  "defaultInterpreterGroup": "spark-submit",
+  "version": "0.10.1",
+  "noteParams": {},
+  "noteForms": {},
+  "angularObjects": {},
+  "config": {
+    "isZeppelinNotebookCronEnable": false,
+    "looknfeel": "default",
+    "personalizedMode": "false"
+  },
+  "info": {
+    "isRunning": true
+  },
+  "path": "/ai_spark_mysql_bus_arrive_prediction"
+}
