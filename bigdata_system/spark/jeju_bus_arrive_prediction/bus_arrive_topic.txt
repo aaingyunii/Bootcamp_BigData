@@ -1,4 +1,27 @@
-create stream car_arrive_topic
+create stream bus_location_topic
+(
+id bigint KEY
+,date DATE
+,route_id varchar
+,vh_id varchar
+,route_nm varchar
+,now_latitude DECIMAL(10,6)
+,now_longitude DECIMAL(10,6)
+,now_station varchar
+,now_arrive_time DECIMAL(2,0)
+,distance DECIMAL(10,1)
+,next_station varchar
+,next_latitude DECIMAL(10,6)
+,next_longitude DECIMAL(10,6)
+,weekday DECIMAL(1,0)
+) with (
+KAFKA_TOPIC = 'bus_location_topic'
+,VALUE_FORMAT = 'JSON'
+,partitions = 1
+);
+
+
+create stream bus_arrive_topic
 (
 id bigint KEY
 ,date DATE
@@ -16,7 +39,7 @@ id bigint KEY
 ,weekday DECIMAL(1,0)
 ,next_arrive_time DECIMAL(10,3)
 ) with (
-KAFKA_TOPIC = 'car_arrive_topic'
+KAFKA_TOPIC = 'bus_arrive_topic'
 ,VALUE_FORMAT = 'JSON'
 ,partitions = 1
 );
