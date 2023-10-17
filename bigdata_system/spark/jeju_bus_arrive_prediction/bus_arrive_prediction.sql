@@ -22,3 +22,6 @@ create table bus_arrive_prediction (
     );
     
 desc bus_arrive_prediction;
+
+select * from bus_arrive_prediction;
+
